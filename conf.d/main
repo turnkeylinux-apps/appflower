@@ -1,0 +1,12 @@
+#!/bin/bash -ex
+
+DB_NAME=appflower
+DB_USER=appflower
+DB_PASS=$(mcookie)
+
+ADMIN_NAME=admin
+ADMIN_PASS=turnkey
+
+SRC=/usr/local/src
+WEBROOT=/var/www/appflower
+

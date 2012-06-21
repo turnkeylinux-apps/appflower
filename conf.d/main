@@ -65,6 +65,11 @@ echo -e "y\\n" | $WEBROOT/symfony propel:insert-sql
 # build cache
 $WEBROOT/symfony appflower:validator-cache frontend cache yes
 
+# set default password
+SHA1_PASS=$(echo -n $ADMIN_PASS | sha1sum | cut -d " " -f 1)
+CONF=$WEBROOT/plugins/appFlowerStudioPlugin/config/users.yml
+sed -i "s|password:.*|password: $SHA1_PASS|g" $CONF
+
 # stop services
 /etc/init.d/mysql stop
 

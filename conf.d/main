@@ -16,3 +16,13 @@ mv $(dirname $WEBROOT)/appflower_studio_playground $WEBROOT
 rm $SRC/appflower_studio_playground_vendors-*.tgz
 chown -R root:root $WEBROOT
 
+# php tweaks
+PHPINI1=/etc/php5/apache2/php.ini
+PHPINI2=/etc/php5/cli/php.ini
+
+sed -i "s|^short_open_tag = On|short_open_tag = Off|" $PHPINI1
+sed -i "s|^short_open_tag = On|short_open_tag = Off|" $PHPINI2
+
+# verify configuration
+php5 $WEBROOT/lib/vendor/symfony/data/bin/check_configuration.php
+

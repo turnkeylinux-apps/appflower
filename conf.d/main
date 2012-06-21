@@ -70,6 +70,12 @@ SHA1_PASS=$(echo -n $ADMIN_PASS | sha1sum | cut -d " " -f 1)
 CONF=$WEBROOT/plugins/appFlowerStudioPlugin/config/users.yml
 sed -i "s|password:.*|password: $SHA1_PASS|g" $CONF
 
+# add footer
+CONF=$WEBROOT/apps/frontend/modules/default/templates/welcomeSuccess.php
+cat >>$CONF<<EOF
+<div id="turnkey-credit" style="font-size:90%;text-align:center;color:white;"><a style="text-decoration:underline;" href="http://www.turnkeylinux.org/appflower">AppFlower Appliance</a> - Powered by <a style="text-decoration:underline;" href="http://www.turnkeylinux.org">TurnKey Linux</a></div>
+EOF
+
 # stop services
 /etc/init.d/mysql stop
 

@@ -26,3 +26,8 @@ sed -i "s|^short_open_tag = On|short_open_tag = Off|" $PHPINI2
 # verify configuration
 php5 $WEBROOT/lib/vendor/symfony/data/bin/check_configuration.php
 
+# configure apache
+a2dissite default
+a2ensite appflower
+a2enmod rewrite
+

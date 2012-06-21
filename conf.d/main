@@ -10,3 +10,9 @@ ADMIN_PASS=turnkey
 SRC=/usr/local/src
 WEBROOT=/var/www/appflower
 
+# unpack
+tar -zxf $SRC/appflower_studio_playground_vendors-*.tgz -C $(dirname $WEBROOT)
+mv $(dirname $WEBROOT)/appflower_studio_playground $WEBROOT
+rm $SRC/appflower_studio_playground_vendors-*.tgz
+chown -R root:root $WEBROOT
+

@@ -31,3 +31,40 @@ a2dissite default
 a2ensite appflower
 a2enmod rewrite
 
+# start services
+/etc/init.d/mysql start
+
+# setup the database
+MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
+MYSQL_ADMIN="mysqladmin --user=root --password=$MYSQL_PASS"
+
+$MYSQL_ADMIN create $DB_NAME
+$MYSQL_BATCH --execute "grant all privileges on $DB_NAME.* to $DB_USER@localhost identified by '$DB_PASS'; flush privileges;"
+
+CONF=$WEBROOT/config/databases.yml
+sed -i "s|dsn:.*|dsn:        mysql:dbname=$DB_NAME;host=localhost|" $CONF
+sed -i "s|username:.*|username:   $DB_USER|" $CONF
+sed -i "s|password:.*|password:   $DB_PASS|" $CONF
+
+CONF=$WEBROOT/config/propel.ini
+sed -i "s|mysql:dbname=.*|mysql:dbname=$DB_NAME;host=localhost|" $CONF
+sed -i "s|database.user.*|database.user       = $DB_USER|" $CONF
+sed -i "s|database.password.*|database.password   = $DB_PASS|" $CONF
+
+sed -i "s|appflower_playground|appflower|g" $CONF
+sed -i "s|/www/.*|$WEBROOT|" $CONF
+
+# set project permissions
+$WEBROOT/symfony project:permission
+$WEBROOT/symfony afs:fix-perms
+
+# build database
+$WEBROOT/symfony propel:build-model
+echo -e "y\\n" | $WEBROOT/symfony propel:insert-sql
+
+# build cache
+$WEBROOT/symfony appflower:validator-cache frontend cache yes
+
+# stop services
+/etc/init.d/mysql stop
+

@@ -1,12 +1,7 @@
 #!/bin/bash -ex
 
-dl() {
-    [ "$FAB_HTTP_PROXY" ] && PROXY="--proxy $FAB_HTTP_PROXY"
-    cd $2; curl -L -f -O $PROXY $1; cd -
-}
+URL="https://github.com/appflower/appflower_studio_playground/archive/v1.3.0.tar.gz"
 
-VERSION="1.3"
-URL="http://cdn.appflower.com/appflower_studio_playground_vendors-${VERSION}.tgz"
-
-dl $URL /usr/local/src
+[ "$FAB_HTTP_PROXY" ] && PROXY="--proxy $FAB_HTTP_PROXY"
+curl -L -f $PROXY "$URL" -o /usr/local/src/appflower.tar.gz
 

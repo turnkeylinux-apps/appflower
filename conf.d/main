@@ -11,9 +11,9 @@ SRC=/usr/local/src
 WEBROOT=/var/www/appflower
 
 # unpack
-tar -zxf $SRC/appflower_studio_playground_vendors-*.tgz -C $(dirname $WEBROOT)
-mv $(dirname $WEBROOT)/appflower_studio_playground $WEBROOT
-rm $SRC/appflower_studio_playground_vendors-*.tgz
+tar -zxf $SRC/appflower.tar.gz -C $(dirname $WEBROOT)
+mv $(dirname $WEBROOT)/appflower_* $WEBROOT
+rm $SRC/appflower.tar.gz
 chown -R root:root $WEBROOT
 
 # php tweaks

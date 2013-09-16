@@ -7,14 +7,7 @@ DB_PASS=$(mcookie)
 ADMIN_NAME=admin
 ADMIN_PASS=turnkey
 
-SRC=/usr/local/src
 WEBROOT=/var/www/appflower
-
-# unpack
-tar -zxf $SRC/appflower.tar.gz -C $(dirname $WEBROOT)
-mv $(dirname $WEBROOT)/appflower_* $WEBROOT
-rm $SRC/appflower.tar.gz
-chown -R root:root $WEBROOT
 
 # php tweaks
 PHPINI1=/etc/php5/apache2/php.ini

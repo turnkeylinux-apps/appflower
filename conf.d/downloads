@@ -1,7 +1,12 @@
 #!/bin/bash -ex
 
-URL="https://github.com/appflower/appflower_studio_playground/archive/v1.3.0.tar.gz"
+[ "$FAB_HTTP_PROXY" ] && export HTTP_PROXY=$FAB_HTTP_PROXY
 
-[ "$FAB_HTTP_PROXY" ] && PROXY="--proxy $FAB_HTTP_PROXY"
-curl -L -f $PROXY "$URL" -o /usr/local/src/appflower.tar.gz
+WEBROOT=/var/www/appflower
+git clone https://github.com/appflower/appflower_studio_playground.git $WEBROOT
+cd $WEBROOT
+git submodule init
+git submodule update
+
+unset HTTP_PROXY
 
